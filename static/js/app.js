@@ -33,7 +33,7 @@ var submit=d3.select("#filter-btn")
 
 submit.on("click",function(){
     d3.event.preventDefault()
-    var inputDateV=inputDate.property("value").trim().toLowerCase();
+    var inputDateV=inputDate.property("value");
     var inputCityV=inputCity.property("value").trim().toLowerCase();
     var inputStateV=inputState.property("value").trim().toLowerCase();
     var inputCountryV=inputCountry.property("value").trim().toLowerCase();
