@@ -1,6 +1,6 @@
 # JavaScript Homework - JavaScript and DOM Manipulation
 
-My website: https://cmutd.github.io/javascript-challenge/
+My website: 
 
 ## Background
 
