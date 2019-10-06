@@ -30,9 +30,8 @@ var first_input=d3.select("#datetime");
 
 
 // filter function
-var submit=first_filter
 
-submit.on("click",function(){
+first_filter.on("click",function(){
     d3.event.preventDefault();
     var first_inputV=first_input.property("value");
     console.log(first_inputV)
@@ -42,11 +41,11 @@ submit.on("click",function(){
 })
 
 
-// reset function
-var reset=d3.select("#f-reset-btn")
-reset.on("click",function(){
+// reset table and input function
+first_reset.on("click",function(){
     tbody.html("")
     result(tableData)
+    first_input.property("value","")
 })
 
 
@@ -58,7 +57,7 @@ var add=d3.select("#add")
 var addB=d3.select("#add-btn")
 var reset=d3.select("#reset-btn");
 var secFilter=d3.select("#filter-btn");
-var resetC=d3.select("#resetCriteria-btn")
+var resetC=d3.select("#reset-btn")
 
 
 //var values=[];
@@ -82,15 +81,50 @@ addB.on("click",function(){
      //console.log(filter)
        //criteria.push(items);
        //values.push(v)
-})
-
-resetC.on("click",function(){
-    add.selectAll("li").remove()
     criter.property("value","")
     value.property("value","")
-    //values=[];
-    //criteria=[]
-    filter={}
-
 })
 
+
+
+secFilter.on("click",function(){
+    // get the length of the dictionary
+    lens=Object.keys(filter).length
+
+
+    // If only have one criteria
+    if (lens==1){
+        input=Object.values(filter)[0]
+        key=Object.keys(filter)[0]
+        // convert keys to lowerCase
+        if (key=="Date"){
+            k="datetime"
+        }
+        else {
+            k=key.toLowerCase()
+        }
+
+        var response=tableData.filter(data=>data[k]==input)
+           result(response)
+}
+/*     else{
+        for (key in filter){
+            result.push(tableData[k]==input)
+            console.log(result)
+            
+        }
+ */    }
+
+)
+
+
+
+resetC.on("click",function(){
+    tbody.html("")
+    criter.property("value","")
+    value.property("value","")
+    add.html("")
+    result(tableData)
+    filter={}
+    add.selectAll("li").remove()
+})
