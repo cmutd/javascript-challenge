@@ -1,7 +1,7 @@
 // from data.js
 var tableData = data;
 
-
+// load table
 var tbody=d3.select("tbody");
 
 // appends a table
@@ -17,43 +17,80 @@ function result(filterData){
 });
 }
 
-
 result(tableData)
 
+// =========================  First basic search part================== //
 
- // select input element
-var inputDate=d3.select("#datetime")
-var inputCity=d3.select("#city")
-var inputState=d3.select("#state")
-var inputCountry=d3.select("#country")
-var inputShape=d3.select("#shape")
+// set button variables
+var first_filter=d3.select("#f-filter-btn");
+var first_reset=d3.select("#f-reset-btn");
 
-// select submit button
-var submit=d3.select("#filter-btn")
+// set input box variables
+var first_input=d3.select("#datetime");
+
+
+// filter function
+var submit=first_filter
 
 submit.on("click",function(){
     d3.event.preventDefault();
-    var inputDateV=inputDate.property("value");
-    var inputCityV=inputCity.property("value").trim().toLowerCase();
-    var inputStateV=inputState.property("value").trim().toLowerCase();
-    var inputCountryV=inputCountry.property("value").trim().toLowerCase();
-    var inputShapeV=inputShape.property("value").trim().toLowerCase();
-    //console.log(inputDateV)
+    var first_inputV=first_input.property("value");
+    console.log(first_inputV)
 
-    var response=tableData.filter(data=>data.datetime===inputDateV);
-/*     var response=tableData.filter(data=>data.city===inputCityV);
-    var response=tableData.filter(data=>data.state===inputStateV);
-    var response=tableData.filter(data=>data.country===inputCountryV);
-    var response=tableData.filter(data=>data.shape===inputShapeV);
- */    //console.log(response)
+    var response=tableData.filter(data=>data.datetime===first_inputV);
     result(response)
 })
 
 
-// select reset buttom
-var reset=d3.select("#reset-btn")
+// reset function
+var reset=d3.select("#f-reset-btn")
 reset.on("click",function(){
     tbody.html("")
     result(tableData)
+})
+
+
+// =========================  second advance search part================== //
+// set variables
+var value=d3.select("#value");
+var criter=d3.select("#criteria")
+var add=d3.select("#add")
+var addB=d3.select("#add-btn")
+var reset=d3.select("#reset-btn");
+var secFilter=d3.select("#filter-btn");
+var resetC=d3.select("#resetCriteria-btn")
+
+
+//var values=[];
+//var criteria=[]
+var filter={}
+// get the dropdown value
+
+addB.on("click",function(){
+    var items=criter.property("value")
+    var v=value.property("value").trim();
+     if (items==="Date"){
+        items=items.trim()
+    }
+    else{
+        v=v.toLowerCase()
+    }
+    add.append("li")
+     .text(items+":"+v)
+
+     filter[items]=v
+     //console.log(filter)
+       //criteria.push(items);
+       //values.push(v)
+})
+
+resetC.on("click",function(){
+    add.selectAll("li").remove()
+    criter.property("value","")
+    value.property("value","")
+    //values=[];
+    //criteria=[]
+    filter={}
+
 })
 
